@@ -5,9 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
 
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 public class NewImage {

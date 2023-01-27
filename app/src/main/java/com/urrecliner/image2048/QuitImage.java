@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 public class QuitImage {

@@ -3,7 +3,6 @@ package com.urrecliner.image2048;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 
@@ -27,8 +26,8 @@ public class BonusImage {
         Bitmap bitmap = Bitmap.createBitmap(blockSize, blockSize, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
 
-        int outColor = 0xFF00BB00;
-        int inColor = 0xFFA0FFA0;
+        int outColor = 0xFF00A000;
+        int inColor = 0xFFB0FFB0;
         canvas.save();
         canvas.rotate(15);
         int xx = blockSize/2; int yy = 40;

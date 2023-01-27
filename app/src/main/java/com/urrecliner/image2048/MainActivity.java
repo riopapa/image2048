@@ -8,14 +8,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -82,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
         mOutPath = new File(Environment.getExternalStorageDirectory(), "download/blocks");
         colors = getColors(mContext);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 2;
 
         Bitmap bigMap  = Bitmap.createBitmap(1400, 2800, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bigMap);
@@ -159,13 +164,39 @@ public class MainActivity extends AppCompatActivity {
 //        new Bitmap2File().save(bitmapSwingF, new File(mOutPath,"a_swing_f.png"));
 
         // bonus Image
-        Bitmap [] bonusMap = new BonusImage().make(mContext, blockSize-20);
-        for (int i = 0; i < bonusMap.length; i++) {
-            nextPos();
-            Log.w("a "+i,"xPos "+xPos);
-            canvas.drawBitmap(bonusMap[i], xPos, yPos, null);
-            new Bitmap2File().save(bonusMap[i], new File(mOutPath,"z"+(100+i)+".png"));
-        }
+//        Bitmap [] bonusMap = new BonusImage().make(mContext, blockSize-20);
+//        for (int i = 0; i < bonusMap.length; i++) {
+//            nextPos();
+//            Log.w("a "+i,"xPos "+xPos);
+//            canvas.drawBitmap(bonusMap[i], xPos, yPos, null);
+//            new Bitmap2File().save(bonusMap[i], new File(mOutPath,"z"+(100+i)+".png"));
+//        }
+
+
+        int num = 3;
+        Bitmap biggerMap = new BlockImage().make(blockSize,
+                cCode[num][0], cCode[num][1], cCode[num][2], (num> 9)? cCode[num][3]:0, num, mContext);
+        biggerMap = Bitmap.createScaledBitmap(biggerMap, blockSize+32, blockSize+32, false);
+        nextPos();
+        canvas.drawBitmap(biggerMap, xPos, yPos, null);
+
+        Canvas exCan = new Canvas(biggerMap);
+        Bitmap exMap =  Bitmap.createScaledBitmap(
+                BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.a_explosion_a, options),
+                blockSize, blockSize, false);
+        Paint exPaint = new Paint();
+        exPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.LIGHTEN));
+        exCan.drawBitmap(exMap, 16, 16, exPaint);
+//        exPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SCREEN));
+//        exCan.drawBitmap(exMap, 16, 16, exPaint);
+//        exPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
+//        exCan.drawBitmap(exMap, 0, 0, exPaint);
+
+    //            new Bitmap2File().save(bitmap, new File(mOutPath,nbr+calcNum(num)+".png"));
+            canvas.drawBitmap(biggerMap, xPos, yPos, null);
+        nextPos();
+
+
 
         ImageView imageView = findViewById(R.id.image1);
         imageView.setImageBitmap(bigMap);
